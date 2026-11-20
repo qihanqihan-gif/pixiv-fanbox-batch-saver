@@ -1,0 +1,595 @@
+:root {
+  --bg: #0f1115;
+  --card: #171a21;
+  --line: #262b36;
+  --txt: #e6e9ef;
+  --dim: #8b93a7;
+  --blue: #1677ff;
+  --green: #18a058;
+  --red: #d03050;
+  --amber: #e0a106;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--txt);
+  font: 14px/1.5 -apple-system, "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+}
+body {
+  padding: 10px 10px 28px;
+}
+.hd {
+  padding: 6px 4px 10px;
+}
+.hd-t {
+  font-size: 17px;
+  font-weight: 600;
+}
+.ver {
+  color: var(--dim);
+  font-size: 12px;
+  font-weight: 400;
+}
+.hd-s {
+  color: var(--dim);
+  font-size: 12px;
+  margin-top: 2px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.lb {
+  font-size: 12px;
+  color: var(--dim);
+  margin-bottom: 6px;
+  display: block;
+}
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.row.wrap {
+  flex-wrap: wrap;
+}
+.row.between {
+  justify-content: space-between;
+}
+.mt8 {
+  margin-top: 8px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+}
+input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  background: #0c0e13;
+  border: 1px solid var(--line);
+  color: var(--txt);
+  border-radius: 9px;
+  padding: 10px 11px;
+  font-size: 14px;
+  outline: none;
+}
+input[type="text"]:focus {
+  border-color: var(--blue);
+}
+input[type="number"].num {
+  width: 76px;
+  background: #0c0e13;
+  border: 1px solid var(--line);
+  color: var(--txt);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+.ck {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--txt);
+}
+.ck input {
+  width: 16px;
+  height: 16px;
+}
+.btn {
+  background: #222836;
+  color: var(--txt);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.btn:active {
+  opacity: 0.8;
+}
+.btn:disabled {
+  opacity: 0.4;
+}
+.btn.primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+  font-weight: 600;
+}
+.btn.danger {
+  background: transparent;
+  border-color: var(--red);
+  color: var(--red);
+}
+.btn.ghost {
+  background: transparent;
+}
+.btn.mini {
+  padding: 4px 9px;
+  font-size: 12px;
+  border-radius: 8px;
+}
+.hint {
+  color: var(--dim);
+  font-size: 12px;
+  margin-top: 6px;
+  word-break: break-all;
+}
+.dim {
+  color: var(--dim);
+  font-size: 12px;
+}
+.bar {
+  /* 0.3.38：8px/10-6 压到 5px/6-4 —— 吸顶卡占屏从 127px 降到 ~105px，进度条本身一眼仍看得清 */
+  height: 5px;
+  background: #0c0e13;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 6px 0 4px;
+}
+.bar > i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #1677ff, #37c2ff);
+  transition: width 0.2s;
+}
+.log {
+  margin: 8px 0 0;
+  max-height: 260px;
+  overflow: auto;
+  background: #0b0d12;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px;
+  font: 11px/1.45 ui-monospace, Menlo, Consolas, monospace;
+  color: #b9c1d1;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* 选完目录扫描出来的「画师卡片」 */
+#artistList {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 7px;
+}
+.ar {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 7px 9px;
+  background: #1b1f27;
+}
+.ar-h {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.ar-n {
+  font-size: 12.5px;
+  color: var(--txt);
+  word-break: break-all;
+}
+.ar-t {
+  font-size: 10px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+.ar-m {
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--dim);
+}
+.ar-b {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ---- 顶部动作条：滚动时固定，手机上随时能停 ---- */
+.card.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg, #17181c);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+/* ---- 折叠区 ---- */
+details.fold > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  list-style: none;
+  padding: 6px 0;
+  min-height: 40px; /* 0.3.32：手指点得准，别只有一行字高 */
+  user-select: none;
+}
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::before {
+  /* 0.3.32：用户反馈「这个箭头太小了」——从 12px 裸字符改成 26px 的圆角块 */
+  content: '▸';
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #232937;
+  color: #9fb0c9;
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 0.15s;
+}
+details.fold[open] > summary::before { transform: rotate(90deg); }
+details.fold > summary > .lb { margin: 0; }
+details.fold[open] > summary { margin-bottom: 8px; }
+details.fold > summary > .dim { margin-left: auto; font-size: 11px; }
+
+/* ================= 模块化卡片（0.3.27）：一个卡片 = 一个功能 ================= */
+.mod .mh {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* 模块编号徽标 */
+.mno {
+  flex: none;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #202634;
+  color: #9fb0c9;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.mno.run {
+  background: #14304a;
+  color: #7cc4ff;
+}
+/* 模块标题 */
+.mt {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--txt);
+  white-space: nowrap;
+}
+/* 模块摘要：不展开也能看到当前设置 */
+.mbr {
+  margin-left: auto;
+  min-width: 0;
+  max-width: 64%;
+  font-size: 11.5px;
+  color: var(--dim);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 模块内的小分组标题 */
+.sub {
+  margin: 12px 0 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #6f7a90;
+}
+.sub:first-of-type {
+  margin-top: 2px;
+}
+
+/* 顶部固定条紧贴屏幕顶部时，留一点安全边距（刘海屏） */
+.card.sticky {
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
+}
+
+/* ================= 0.3.29：label 里嵌下拉时，标签文字被挤成「竖排单字」 =================
+ * 真机目检抓到的现场：模块 1「来源 / 收藏结构」两个 select 很长，
+ * .ck 是 flex 容器，标签文字是可收缩的匿名项 → 被压到 1 个字宽，变成一列竖排字。
+ * 处理：装 select 的 label 不换行、各占一整行；下拉吃剩余宽度并允许收缩。
+ */
+.ck:has(> select) {
+  white-space: nowrap;
+  overflow: hidden; /* 0.3.30：下拉最长那条选项会把卡片右边缘顶出去，箭头被切掉 */
+}
+.row.wrap > .ck:has(> select) {
+  flex: 1 1 100%;
+}
+.ck > select {
+  /* 0.3.30：basis 用 0 而不是 auto —— auto 会按「最长选项」的 min-content 撑开，仍然溢出 */
+  flex: 1 1 0%;
+  min-width: 0;
+  max-width: 100%;
+  /* 0.3.34：以前没给颜色，真机上渲染成白底黑字的系统下拉，跟深色卡片像两个世界 */
+  background: #0c0e13;
+  color: var(--txt);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 8px;
+  font-size: 13px;
+}
+
+/* ================= 0.3.32：三段模式卡片 =================
+ * 反馈原话：「没有做好 pixiv画师 / Fanbox / pixiv收藏 这三个的区分」，而且「文字多了点」。
+ * 做法：三个并列的大按钮（每块一行标题 + 一行小字），选中态高亮；
+ *      解释文字收进折叠的「三种模式的差别」，主界面只留一行按模式变化的提示。
+ */
+/* 0.3.34：竖排三块（每块 62px）首屏吃掉 202px，改为横排三格 = 54px 一行。
+ * 靠站点徽标（FANBOX 琥珀 / PIXIV 蓝）而不是「某位画师的全部投稿」这种近义长句来区分。 */
+.modes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+.mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 54px;
+  padding: 8px 4px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #1b1f27;
+  color: var(--txt);
+  font: inherit;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.08s, border-color 0.15s, background-color 0.15s;
+}
+.mode:active {
+  transform: scale(0.97);
+}
+.m-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.m-tag.fb {
+  background: #3b2d18;
+  color: #f5b942;
+}
+.m-tag.px {
+  background: #152b44;
+  color: #5eb5ff;
+}
+.mode b {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.mode.on {
+  border-color: var(--blue);
+  background: #16283f;
+  box-shadow: inset 0 0 0 1px var(--blue);
+}
+.mode.on b {
+  color: #7cc4ff;
+}
+
+/* 折叠的说明区：只在用户主动点开时出现，避免主界面堆字 */
+.help {
+  margin-top: 10px;
+}
+.help > summary {
+  /* 0.3.37：以前是 12px 裸字符 ▸ + 4px 上下留白，真机上几乎看不出「这行能点」
+     （用户反馈：「音视频那个小箭头做得更明显点」）。改成整行可点的条 + 20px 圆角块。 */
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  font-size: 12px;
+  color: #a7b0c2;
+  cursor: pointer;
+  list-style: none;
+  padding: 4px 0;
+  user-select: none;
+}
+.help > summary::-webkit-details-marker { display: none; }
+.help > summary::before {
+  content: '▸';
+  flex: none;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #242a38;
+  color: #b9c1d1;
+  font-size: 12px;
+  line-height: 1;
+}
+.help[open] > summary { color: var(--txt); }
+.help[open] > summary::before {
+  content: '▾';
+  background: #2b3346;
+  color: #dfe5ef;
+}
+.help-b p {
+  margin: 6px 0;
+  font-size: 12px;
+  color: var(--dim);
+  line-height: 1.65;
+}
+.help-b code {
+  background: #0c0e13;
+  padding: 0 3px;
+  border-radius: 4px;
+  color: #b9c1d1;
+}
+
+/* ================= 0.3.34：首屏压缩 / 层级 / 触感 =================
+ * 这一批只动「看起来怎么样、点下去有没有反应」，不动任何下载逻辑。
+ * 依据：第 2 轮 UI 评审（截图 + html/css/js 三件套）逐条落地。
+ */
+
+/* 页头站点徽标：一眼看出当前模式对应哪个站点（以前 #siteBadge 只有 JS 引用、页面里没有元素） */
+.site-badge {
+  display: inline-block;
+  vertical-align: 1px;
+  margin-left: 2px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: #3b2d18;
+  color: #f5b942;
+}
+.site-badge.is-px {
+  background: #152b44;
+  color: #5eb5ff;
+}
+
+/* 模块 0：四个动作单行排开（360px 不折行；更窄的屏由 .row.wrap 兜底换行） */
+.run-acts {
+  gap: 6px;
+}
+.run-acts > #start {
+  flex: 1 1 auto;
+}
+.run-acts > #pause,
+.run-acts > #stop {
+  flex: none;
+  padding: 10px 12px;
+}
+.run-acts > #precheck {
+  flex: none;
+  padding: 10px 10px;
+  font-size: 13px;
+}
+
+/* 模块 2：目录按钮与状态上下两行 —— 长路径不再把「选择文件夹」挤成半宽 */
+.dir-pick {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+.dir-pick > .btn {
+  width: 100%;
+}
+.dir-pill {
+  /* 0.3.38：改成 flex —— 右侧挂「重选 ›」线索（见文件末尾 .dir-pill::after），一眼看出这条能点 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  background: #0c0e13;
+  border: 1px dashed var(--line);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--dim);
+  word-break: break-all;
+  cursor: pointer;
+}
+.dir-pill:active {
+  border-color: var(--blue);
+  color: var(--txt);
+}
+
+/* 收藏结构块跟上面的账号框拉开一点：那一行时常会多出「不是数字 uid」的提示 */
+#favBox {
+  margin-top: 10px;
+}
+
+/* 三档层级：1/2 是每次任务必看的配置，3–6 是进阶与诊断 */
+.mod[data-mod="target"],
+.mod[data-mod="dir"] {
+  border-left: 2px solid #1e4268;
+}
+.mod[data-mod="target"] .mno,
+.mod[data-mod="dir"] .mno {
+  background: #14304a;
+  color: #7cc4ff;
+}
+.mod[data-mod="content"],
+.mod[data-mod="pace"],
+.mod[data-mod="scan"],
+.mod[data-mod="log"] {
+  background: #14171e;
+}
+.mod[data-mod="content"] .mno,
+.mod[data-mod="pace"] .mno,
+.mod[data-mod="scan"] .mno,
+.mod[data-mod="log"] .mno {
+  background: #1b2029;
+  color: #7d869a;
+}
+
+/* 按压反馈：按钮缩一点点 + 折叠箭头按下时也缩，但展开态必须保持 90°（不然一按就弹回 ▸） */
+.btn {
+  transition: transform 0.08s, opacity 0.12s, background-color 0.15s;
+}
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+details.fold > summary:active::before {
+  background: #2e3648;
+  transform: scale(0.92);
+}
+details.fold[open] > summary:active::before {
+  background: #2e3648;
+  transform: rotate(90deg) scale(0.92);
+}
+
+/* ================= 0.3.38：首屏预算 + 入口线索（第 3 轮评审 P0/P1） =================
+ * 全部追加在文件末尾：不碰 243 行首个 summary::before（26px 断言在 240 字符窗口内），
+ * 也不改 .ck > select 的 flex/min-width，`details.fold` 的按压反馈规则保持原位。
+ */
+/* 空提示不占位：#creatorInfo / #modeHint 没内容时连 6px 上边距一起收掉 */
+.hint:empty { display: none; }
+/* 吸顶运行卡：上下内边距 12px → 8px（安全区仍按 env(safe-area-inset-top) 让位） */
+.card.sticky { padding: 8px 12px; padding-top: calc(8px + env(safe-area-inset-top, 0px)); }
+/* 目录胶囊右侧的「重选 ›」—— 纯 CSS 视觉线索，不新增元素、不改点击逻辑 */
+.dir-pill::after { content: '重选 ›'; flex: none; font-size: 11px; color: #7cc4ff; }
+

@@ -1,0 +1,17 @@
+# 打包私钥：绝对不要提交
+*.pem
+*.key
+
+# 本地调试/设备取回的文件
+*.log
+_ui_*.xml
+*.png.bak
+
+# 系统垃圾
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 临时目录
+node_modules/
+.tmp/
